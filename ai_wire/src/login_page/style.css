@@ -1,0 +1,18 @@
+.Login {
+  text-align: center;
+}
+
+.login-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.login-title {
+  font-size: 1.5em;
+}
+
+.login-intro {
+  font-size: large;
+}
