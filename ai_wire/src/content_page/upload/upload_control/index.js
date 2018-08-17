@@ -11,25 +11,125 @@ class UploadControl extends React.Component {
       label: '显示标签',
       multiply: '2倍',
       size: '普通',
+      item1: false,
+      item2: false,
+      item3: false,
+      item4: false,
     }
   }
 
-  handle_menu = () => {
-    
+  all_onclick = (e) => {
+    if (e.target.checked) {
+      this.setState({
+        item1: true,
+        item2: true,
+        item3: true,
+        item4: true,
+      });
+    } else {
+      this.setState({
+        item1: false,
+        item2: false,
+        item3: false,
+        item4: false,
+      });
+    }
   }
-  menu = (
-    <Menu onClick={this.handle_menu}>
-      <Menu.Item key="全选">
-        全选
-      </Menu.Item>
-      <Menu.Item key="正常">
-        正常
-      </Menu.Item>
-      <Menu.Item key="缺陷">
-        缺陷
-      </Menu.Item>
-    </Menu>
-  );
+
+  normal_onclick = (e) => {
+    if (e.target.checked) {
+      this.setState({
+        item1: true,
+        item2: false,
+        item3: true,
+        item4: false,
+      });
+    }
+  }
+
+  week_onclick = (e) => {
+    if (e.target.checked) {
+      this.setState({
+        item1: false,
+        item2: true,
+        item3: false,
+        item4: true,
+      });
+    }
+  }
+
+  item1_onclick = (e) => {
+    this.setState({
+      item1: e.target.checked,
+    });
+  }
+
+  item2_onclick = (e) => {
+    this.setState({
+      item2: e.target.checked,
+    });
+  }
+
+  item3_onclick = (e) => {
+    this.setState({
+      item3: e.target.checked,
+    });
+  }
+
+  item4_onclick = (e) => {
+    this.setState({
+      item4: e.target.checked,
+    });
+  }
+
+  menu = () => {
+    return (
+      <Menu onClick={this.handle_menu} multiple>
+        <Menu.Item key="全选">
+          <Checkbox 
+            checked={this.state.item1 && this.state.item2 && this.state.item3 && this.state.item4 }
+            onChange={this.all_onclick}
+          >全选</Checkbox>
+        </Menu.Item>
+        <Menu.Item key="正常">
+          <Checkbox
+            checked={this.state.item1 && !this.state.item2 && this.state.item3 && !this.state.item4 }
+            onChange={this.normal_onclick}
+          >正常</Checkbox>
+        </Menu.Item>
+        <Menu.Item key="缺陷">
+          <Checkbox
+            checked={!this.state.item1 && this.state.item2 && !this.state.item3 && this.state.item4 }
+            onChange={this.week_onclick}
+          >缺陷</Checkbox>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <Checkbox
+            checked={this.state.item1}
+            onChange={this.item1_onclick}
+          >绝缘子</Checkbox>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <Checkbox
+            checked={this.state.item2}
+            onChange={this.item2_onclick}
+          >绝缘子缺失</Checkbox>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <Checkbox
+            checked={this.state.item3}
+            onChange={this.item3_onclick}
+          >销钉</Checkbox>
+        </Menu.Item>
+        <Menu.Item key="4">
+          <Checkbox
+            checked={this.state.item4}
+            onChange={this.item4_onclick}
+          >销钉缺失</Checkbox>
+        </Menu.Item>
+      </Menu>
+    )
+  };
 
   handle_label_menu = (e) => {
     this.setState({
@@ -101,7 +201,7 @@ class UploadControl extends React.Component {
         </div>
         <div className="upload-options">
           <div>
-            <Dropdown overlay={this.menu}>
+            <Dropdown overlay={this.menu()}>
               <div>
                 标注筛选
                 <Icon type="down" />
