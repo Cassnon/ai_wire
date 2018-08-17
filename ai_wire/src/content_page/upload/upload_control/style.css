@@ -1,0 +1,37 @@
+.UploadControl {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin: 60px;
+}
+
+.upload-header, .upload-options {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding-left: 20px;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom:1px solid #ccc;
+}
+
+.upload-options div{
+  display: flex;
+  margin-left:10px;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.upload-header button{
+  margin-left:10px;
+  margin-right: 10px;
+}
+
+.upload-contain {
+  height: 600px;
+  width: 100%;
+  overflow: auto;
+}
