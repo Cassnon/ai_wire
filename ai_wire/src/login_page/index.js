@@ -1,19 +1,72 @@
 import * as React from 'react';
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import * as axios from 'axios';
 import './style.css';
 
-class Login extends React.Component {
+const FormItem = Form.Item;
+
+class NormalLoginForm extends React.Component {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        axios.post('http://120.78.189.46:80/api/v0.1/run', {
+          func: 'login',
+          params: {
+            username: values.username,
+            password: values.password,
+          }
+        })
+        .then(function(response) {
+          console.log(response);
+          window.location = '/';
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      }
+    });
+  }
+
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
-      <div className="Login">
-        <header className="login-header">
-          <h1 className="login-title">Welcome to React</h1>
-        </header>
-        <p className="login-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Form onSubmit={this.handleSubmit} className="login-form">
+        <FormItem>
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: 'Please input your username!' }],
+          })(
+            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'Please input your Password!' }],
+          })(
+            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+          )}
+        </FormItem>
+        <FormItem>
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            Log in
+          </Button>
+        </FormItem>
+      </Form>
     );
   }
 }
 
+class Login extends React.Component {
+  render() {
+    const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
+    return (
+      <div className="login">
+        <WrappedNormalLoginForm/>
+      </div>
+    )
+  }
+}
+
+
 export default Login;
+

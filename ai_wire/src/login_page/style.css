@@ -1,18 +1,17 @@
-.Login {
-  text-align: center;
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-
-.login-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.login .login-form {
+  width: 300px;
+  justify-content: center;
+  align-content: center;
 }
-
-.login-title {
-  font-size: 1.5em;
+.login .login-form-forgot {
+  float: right;
 }
-
-.login-intro {
-  font-size: large;
+.login .login-form-button {
+  width: 100%;
 }
