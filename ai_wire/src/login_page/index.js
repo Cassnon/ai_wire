@@ -19,7 +19,7 @@ class NormalLoginForm extends React.Component {
         })
         .then(function(response) {
           console.log(response);
-          window.location = '/';
+          // window.location = '/';
         })
         .catch(function(error) {
           console.log(error);

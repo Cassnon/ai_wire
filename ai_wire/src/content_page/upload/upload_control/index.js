@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Button, Menu, Dropdown, Icon, Checkbox } from 'antd';
 import './style.css';
+import * as axios from 'axios';
 
 class UploadControl extends React.Component {
   constructor() {
@@ -185,12 +186,51 @@ class UploadControl extends React.Component {
     </Menu>
   );
 
+  upload_file_click() {
+    this.upload_file_element.click();
+  }
+
+  upload_file(e) {
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      axios.post('http://120.78.189.46:80/api/v0.1/run', {
+        func: 'uploadImage',
+        params: {
+          image: event.target.result,
+          name: file.name,
+        },
+        user: {
+          userId: 'dec6eeddd461a50e1cf4969b8d6c8b9b',
+          session: "862bbfb2783b1a026e73b25a634162f6",
+          token: "53b2f22563bf93cfae846b8624417a31login",
+        }
+      })
+      .then(function(response) {
+        console.log(response);
+        // window.location = '/';
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+      console.log(event.target.result);
+    }
+  }
+
   render() {
     return (
       <div className="UploadControl">
         <div className="upload-header">
           <div>
-            <Button type="primary" icon="plus" size="large">添加图片</Button>
+            <Button type="primary" icon="plus" size="large"
+                onClick={this.upload_file_click.bind(this)}
+            >添加图片</Button>
+            <input type="file"
+                style={{display:'none'}}
+                ref={(ref) => {this.upload_file_element = ref}}
+                onChange={this.upload_file.bind(this)}
+            />
             <Button size="large">清空</Button>
           </div>
           <div>
